@@ -14,9 +14,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to my web server");
 });
 const usersRoutes = require("./src/routes/users.routes");
-
+const groupServiceRoute = require("./src/routes/groupService.routes");
+const inforServiceRoute = require("./src/routes/inforService.routes");
 app.use("/api/v1/users", usersRoutes);
-
+app.use("/api/v1/groupService", groupServiceRoute);
+app.use("/api/v1/inforService", inforServiceRoute);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
