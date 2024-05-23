@@ -1,14 +1,22 @@
-const { createServer } = require("node:http");
+const express = require("express");
+const app = express();
+require("dotenv").config();
 
-const hostname = "127.0.0.1";
-const port = 3000;
+const bodyParser = require("body-parser");
 
-const server = createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World GG");
+const port = process.env.PORT || 8888;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.send("Welcome to my web server");
 });
+const usersRoutes = require("./src/routes/users.routes");
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.use("/api/v1/users", usersRoutes);
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
