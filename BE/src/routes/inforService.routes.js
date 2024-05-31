@@ -2,8 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-const inforGroupController = require("../controllers/inforService.controller");
+const inforServiceController = require("../controllers/inforService.controller");
 
-router.get("/", inforGroupController.getAll);
+router.get("/", inforServiceController.getAll);
 
 module.exports = router;

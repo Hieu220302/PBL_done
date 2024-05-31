@@ -1,7 +1,7 @@
 "use strict";
 const InforService = require("../models/inforService.model");
 
-const groupServiceController = {
+const inforServiceController = {
   getAll: (req, res) => {
     InforService.getAll(function (err, inforService) {
       if (err) res.send(err);
@@ -14,4 +14,4 @@ const groupServiceController = {
   deleteUsers: (req, res) => {},
 };
 
-module.exports = groupServiceController;
+module.exports = inforServiceController;
