@@ -41,7 +41,7 @@ Users.getById = function (id, result) {
 
 Users.checkAuth = function (userName, password, result) {
   dbConn.query(
-    `Select * from Users WHERE Username ='${userName}' AND Password ='${password}'`,
+    `SELECT * FROM Users WHERE Username COLLATE utf8_bin = '${userName}' AND Password COLLATE utf8_bin = '${password}'`,
     function (err, res) {
       if (err) {
         console.log("error: ", err);

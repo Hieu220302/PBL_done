@@ -25,6 +25,20 @@ orderService.getAll = function (result) {
   });
 };
 
+orderService.getByIdUser = function (id, result) {
+  dbConn.query(
+    `Select * from Service_order WHERE id_user=${id}`,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
 orderService.postOrder = function (result, props) {
   const {
     id_user,
