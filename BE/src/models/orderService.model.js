@@ -50,10 +50,12 @@ orderService.postOrder = function (result, props) {
     State,
     Notes,
     Total,
+    isServicePacks,
+    code,
   } = props.body;
   const sql = `
-        INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, id_service, State, Notes, Total)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, id_service, State, Notes, Total,isServicePacks,code)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)
     `;
   const values = [
     id_user,
@@ -65,7 +67,24 @@ orderService.postOrder = function (result, props) {
     State,
     Notes,
     Total,
+    isServicePacks,
+    code,
   ];
+
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
+orderService.changeStateOrder = function (result, props) {
+  const { id, State } = props.body;
+  const sql = `UPDATE Service_order SET State = ? WHERE id = ?`;
+  const values = [State, id];
 
   dbConn.query(sql, values, function (err, res) {
     if (err) {

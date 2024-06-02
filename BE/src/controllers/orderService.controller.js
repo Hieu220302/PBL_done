@@ -20,7 +20,12 @@ const orderServiceController = {
       res.send(orderService);
     }, req);
   },
-  updateUsers: (req, res) => {},
+  changeStateOrder: (req, res) => {
+    orderService.changeStateOrder(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    }, req);
+  },
   deleteUsers: (req, res) => {},
 };
 
