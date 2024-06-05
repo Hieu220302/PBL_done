@@ -26,6 +26,18 @@ const orderServiceController = {
       res.send(orderService);
     }, req);
   },
+  getByIdStaff: (req, res) => {
+    orderService.getByIdStaff(req.params.id, function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    });
+  },
+  changeOrderByStaff: (req, res) => {
+    orderService.changeOrderByStaff(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    }, req);
+  },
   deleteUsers: (req, res) => {},
 };
 

@@ -15,6 +15,7 @@ var Users = function (users) {
   this.Password = users.Password;
   this.Created_at = users.Created_at;
   this.Updated_at = users.Updated_at;
+  this.isSignUpStaff = users.isSignUpStaff;
 };
 
 Users.getAll = function (result) {
@@ -39,9 +40,65 @@ Users.getById = function (id, result) {
   });
 };
 
+Users.signUpStaff = function (id, result) {
+  dbConn.query(
+    `UPDATE Users  SET isSignUpStaff=1 WHERE id = ${id}`,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
 Users.checkAuth = function (userName, password, result) {
   dbConn.query(
     `SELECT * FROM Users WHERE Username COLLATE utf8_bin = '${userName}' AND Password COLLATE utf8_bin = '${password}'`,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Users.updateUser = function (result, props) {
+  const { id, Name, DOB, CIC, Address, Phone_number, Email, Updated_at } =
+    props.body;
+
+  const query = `
+    UPDATE Users 
+    SET 
+      Name = ?, 
+      DOB = ?, 
+      CIC = ?, 
+      Address = ?, 
+      Phone_number = ?, 
+      Email = ?, 
+      Updated_at = ?
+    WHERE id = ?`;
+
+  const values = [Name, DOB, CIC, Address, Phone_number, Email, Updated_at, id];
+
+  dbConn.query(query, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
+Users.getAllByStaff = function (result) {
+  dbConn.query(
+    "   SELECT s.id_user,s.id, u.Name,u.Phone_number  FROM Users u JOIN Service_order s ON s.id_user = u.id",
     function (err, res) {
       if (err) {
         console.log("error: ", err);

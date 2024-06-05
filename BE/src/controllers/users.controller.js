@@ -8,6 +8,12 @@ const usersController = {
       res.send(users);
     });
   },
+  getAllByStaff: (req, res) => {
+    Users.getAllByStaff(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    });
+  },
   getById: (req, res) => {
     Users.getById(req.params.id, function (err, users) {
       if (err) res.send(err);
@@ -21,7 +27,18 @@ const usersController = {
       res.send(users);
     });
   },
-  updateUsers: (req, res) => {},
+  updateUsers: (req, res) => {
+    Users.updateUser(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    }, req);
+  },
+  signUpStaff: (req, res) => {
+    Users.signUpStaff(req.params.id, function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    });
+  },
   deleteUsers: (req, res) => {},
 };
 

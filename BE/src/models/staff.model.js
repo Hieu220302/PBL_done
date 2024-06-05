@@ -1,20 +1,12 @@
 "use strict";
 var dbConn = require("../../config/db.config");
 
-var Staff = function (users) {
-  this.id = users.id;
-  this.Name = users.Name;
-  this.DOB = users.DOB;
-  this.CIC = users.CIC;
-  this.Address = users.Address;
-  this.Phone_number = users.Phone_number;
-  this.Email = users.Email;
-  this.Image = users.Image;
-  this.Id_role = users.Id_role;
-  this.Username = users.Username;
-  this.Password = users.Password;
-  this.Created_at = users.Created_at;
-  this.Updated_at = users.Updated_at;
+var Staff = function (staff) {
+  this.id = staff.id;
+  this.id_service = staff.id_service;
+  this.id_User = staff.id_User;
+  this.Registration_Time = staff.Registration_Time;
+  this.Free_time = staff.Free_time;
 };
 
 Staff.getAll = function (result) {

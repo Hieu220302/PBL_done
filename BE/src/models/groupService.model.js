@@ -1,9 +1,9 @@
 "use strict";
 var dbConn = require("../../config/db.config");
 
-var GroupService = function (users) {
-  this.id = users.id;
-  this.Name = users.Name;
+var GroupService = function (groupService) {
+  this.id = groupService.id;
+  this.Name = groupService.Name;
 };
 
 GroupService.getAll = function (result) {
