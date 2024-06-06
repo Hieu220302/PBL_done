@@ -45,10 +45,10 @@ orderService.getByIdUser = function (id, result) {
 
 orderService.getByIdStaff = function (id, result) {
   dbConn.query(
-    `SELECT *
-    FROM Service_order
-    WHERE id_staff = ${id} AND Time >= NOW()
-    ORDER BY Time ASC;`,
+    `SELECT s.id,s.id_User,u.* 
+    FROM Staff s JOIN Service_order u ON s.id = u.id_staff
+        WHERE s.id_User = ${id} AND Time >= NOW()
+        ORDER BY Time ASC;`,
     function (err, res) {
       if (err) {
         console.log("error: ", err);

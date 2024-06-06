@@ -19,6 +19,12 @@ const staffController = {
       res.send(staff);
     });
   },
+  changeFreeTime: (req, res) => {
+    Staff.changeFreeTime(function (err, staff) {
+      if (err) res.send(err);
+      res.send(staff);
+    }, req);
+  },
   updateStaff: (req, res) => {},
   deleteStaff: (req, res) => {},
 };

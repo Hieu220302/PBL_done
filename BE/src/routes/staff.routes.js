@@ -2,10 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 
-const usersController = require("../controllers/staff.controller");
+const staffController = require("../controllers/staff.controller");
 
-router.get("/", usersController.getAll);
-router.get("/customer", usersController.getAllByCustomer);
-router.get("/:id", usersController.getById);
-
+router.get("/", staffController.getAll);
+router.get("/customer", staffController.getAllByCustomer);
+router.get("/:id", staffController.getById);
+router.put("/changeFreeTime", staffController.changeFreeTime);
 module.exports = router;

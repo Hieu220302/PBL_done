@@ -38,17 +38,29 @@ Staff.getAllByCustomer = function (result) {
 };
 
 Staff.getById = function (id, result) {
-  dbConn.query(
-    `SELECT s.*, u.* FROM Users u JOIN Staff s ON s.id_User = u.id WHERE s.id= ${id}`,
-    function (err, res) {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-      } else {
-        result(null, res);
-      }
+  dbConn.query(`SELECT * FROM Staff WHERE id_User= ${id}`, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
     }
-  );
+  });
+};
+
+Staff.changeFreeTime = function (result, props) {
+  const { id, Free_time } = props.body;
+  const sql = `UPDATE Staff  SET Free_time =? WHERE id = ?`;
+  const values = [Free_time, id];
+
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
 };
 
 module.exports = Staff;
