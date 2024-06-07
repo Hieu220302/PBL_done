@@ -25,6 +25,12 @@ const staffController = {
       res.send(staff);
     }, req);
   },
+  changeRegistrationTime: (req, res) => {
+    Staff.changeRegistrationTime(function (err, staff) {
+      if (err) res.send(err);
+      res.send(staff);
+    }, req);
+  },
   updateStaff: (req, res) => {},
   deleteStaff: (req, res) => {},
 };

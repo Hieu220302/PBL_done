@@ -40,18 +40,18 @@ Users.getById = function (id, result) {
   });
 };
 
-Users.signUpStaff = function (id, result) {
-  dbConn.query(
-    `UPDATE Users  SET isSignUpStaff=1 WHERE id = ${id}`,
-    function (err, res) {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-      } else {
-        result(null, res);
-      }
+Users.signUpStaff = function (result, props) {
+  const { id_service, id } = props.body;
+  const query = `UPDATE Users  SET isSignUpStaff=? WHERE id = ?`;
+  const values = [id_service, id];
+  dbConn.query(query, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
     }
-  );
+  });
 };
 
 Users.checkAuth = function (userName, password, result) {
@@ -108,6 +108,51 @@ Users.getAllByStaff = function (result) {
       }
     }
   );
+};
+
+Users.checkUsername = function (result, props) {
+  const { Username } = props.body;
+  dbConn.query(
+    `SELECT Username FROM Users Where Username ='${Username}'`,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Users.signUpUser = function (result, props) {
+  const { Name, DOB, CIC, Address, Phone_number, Email, Username, Password } =
+    props.body;
+
+  const query = `
+        INSERT INTO Users ( Name, DOB,CIC ,Address ,Phone_number ,Email ,
+        Id_role ,Username ,Password,  Created_at,Updated_at )
+        VALUES (?,?,?, ?, ?, ?,2,?,?,now(),now())`;
+
+  const values = [
+    Name,
+    DOB,
+    CIC,
+    Address,
+    Phone_number,
+    Email,
+    Username,
+    Password,
+  ];
+
+  dbConn.query(query, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
 };
 
 module.exports = Users;

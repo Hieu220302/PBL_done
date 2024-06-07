@@ -8,4 +8,5 @@ router.get("/", staffController.getAll);
 router.get("/customer", staffController.getAllByCustomer);
 router.get("/:id", staffController.getById);
 router.put("/changeFreeTime", staffController.changeFreeTime);
+router.put("/changeRegistrationTime", staffController.changeRegistrationTime);
 module.exports = router;

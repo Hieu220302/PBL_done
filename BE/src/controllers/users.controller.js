@@ -34,12 +34,23 @@ const usersController = {
     }, req);
   },
   signUpStaff: (req, res) => {
-    Users.signUpStaff(req.params.id, function (err, users) {
+    Users.signUpStaff(function (err, users) {
       if (err) res.send(err);
       res.send(users);
-    });
+    }, req);
   },
-  deleteUsers: (req, res) => {},
+  signUpUser: (req, res) => {
+    Users.signUpUser(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    }, req);
+  },
+  checkUsername: (req, res) => {
+    Users.checkUsername(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    }, req);
+  },
 };
 
 module.exports = usersController;

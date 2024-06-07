@@ -60,6 +60,22 @@ orderService.getByIdStaff = function (id, result) {
   );
 };
 
+orderService.getByIdGroupService = function (result, props) {
+  const { id_group_service, id_user } = props.body;
+  const sql = `SELECT * FROM Service_order WHERE State =2 AND id_group_service =? 
+    AND id_user != ?
+    AND Time >= NOW() ORDER BY Time ASC`;
+  const values = [id_group_service, id_user];
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
 orderService.postOrder = function (result, props) {
   const {
     id_user,
@@ -74,10 +90,12 @@ orderService.postOrder = function (result, props) {
     isServicePacks,
     code,
     days,
+    id_group_service,
   } = props.body;
   const sql = `
-        INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, id_service, State, Notes, Total,isServicePacks,code,days)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)
+        INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, 
+        id_service, State, Notes, Total,isServicePacks,code,days,id_group_service)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)
     `;
   const values = [
     id_user,
@@ -92,6 +110,7 @@ orderService.postOrder = function (result, props) {
     isServicePacks,
     code,
     days,
+    id_group_service,
   ];
 
   dbConn.query(sql, values, function (err, res) {

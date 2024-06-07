@@ -14,6 +14,12 @@ const orderServiceController = {
       res.send(orderService);
     });
   },
+  getByIdGroupService: (req, res) => {
+    orderService.getByIdGroupService(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    }, req);
+  },
   postOrder: (req, res) => {
     orderService.postOrder(function (err, orderService) {
       if (err) res.send(err);

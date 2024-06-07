@@ -9,6 +9,8 @@ router.get("/getAllByStaff", usersController.getAllByStaff);
 router.get("/:id", usersController.getById);
 
 router.post("/signin", usersController.checkAuth);
-router.put("/signUpStaff/:id", usersController.signUpStaff);
+router.put("/signUpStaff", usersController.signUpStaff);
+router.post("/signUpUser", usersController.signUpUser);
+router.post("/checkUsername", usersController.checkUsername);
 router.put("/updateUser", usersController.updateUsers);
 module.exports = router;

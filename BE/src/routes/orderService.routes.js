@@ -9,5 +9,6 @@ router.get("/", orderServiceController.getAll);
 router.put("/changeStateOrder", orderServiceController.changeStateOrder);
 router.put("/changeOrderByStaff", orderServiceController.changeOrderByStaff);
 router.get("/idUser/:id", orderServiceController.getByIdUser);
+router.post("/idGroupService", orderServiceController.getByIdGroupService);
 router.get("/idStaff/:id", orderServiceController.getByIdStaff);
 module.exports = router;

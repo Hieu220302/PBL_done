@@ -63,4 +63,19 @@ Staff.changeFreeTime = function (result, props) {
   });
 };
 
+Staff.changeRegistrationTime = function (result, props) {
+  const { id, Free_time, Registration_Time } = props.body;
+  const sql = `UPDATE Staff  SET Free_time =? , Registration_Time=? WHERE id = ?`;
+  const values = [Free_time, Registration_Time, id];
+
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
 module.exports = Staff;
