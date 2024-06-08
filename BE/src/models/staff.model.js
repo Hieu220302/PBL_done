@@ -11,7 +11,7 @@ var Staff = function (staff) {
 
 Staff.getAll = function (result) {
   dbConn.query(
-    "SELECT s.*, u.*  FROM Users u JOIN Staff s ON s.id_User = u.id",
+    "SELECT s.*,s.id AS id_Staff, u.*  FROM Users u JOIN Staff s ON s.id_User = u.id",
     function (err, res) {
       if (err) {
         console.log("error: ", err);

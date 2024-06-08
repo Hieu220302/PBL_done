@@ -19,14 +19,17 @@ var orderService = function (orderService) {
 };
 
 orderService.getAll = function (result) {
-  dbConn.query("Select * from Service_order", function (err, res) {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-    } else {
-      result(null, res);
+  dbConn.query(
+    "Select * from Service_order WHERE (id_staff != '' OR id_staff IS NOT NULL) AND State !=3",
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
     }
-  });
+  );
 };
 
 orderService.getAllState = function (result) {

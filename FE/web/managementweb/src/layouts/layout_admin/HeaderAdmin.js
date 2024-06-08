@@ -22,13 +22,8 @@ const HeaderAdmin = () => {
           {user && (
             <div className="menuhearbussiness">
               <div className="account-menu">
-                <label>
-                  <Link to="/profile">👤 {user.Name}</Link>
-                </label>
+                <label>👤 {user.Name}</label>
                 <ul>
-                  <li>
-                    <Link to="/profile">👤 Hồ sơ của tôi</Link>
-                  </li>
                   <li>
                     <Link onClick={(e) => handleLogout(e)}>🚪 Đăng xuất</Link>
                   </li>

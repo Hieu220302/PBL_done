@@ -68,7 +68,7 @@ const UserAdmin = () => {
             </div>
           ))
         ) : (
-          <h2>Không có người dùng phù hợp</h2>
+          <h2>Không có người dùng đăng kí nhân viên</h2>
         )}
       </div>
     </>

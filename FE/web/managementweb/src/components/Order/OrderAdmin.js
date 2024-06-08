@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listOrder } from "../../redux/reducers/OderService/orderService";
 import { listStaff } from "../../redux/reducers/Staff/staff";
+import changeRegistrationTime from "../../api/Staff/changeRegistrationTime";
 
+import changeOrderByStaff from "../../api/OderService/changeOrderByStaff";
+import changeStateOrderService from "../../api/OderService/changeStateOrderService";
 const OrderAdmin = () => {
   const dispatch = useDispatch();
   const { dataOrder } = useSelector((state) => state.listOrder);
@@ -29,8 +32,43 @@ const OrderAdmin = () => {
     return formattedDate;
   };
 
-  const handleConfirm = async (selectedOption) => {
-    console.log(selectedOption);
+  const handleConfirm = async (selectedOption, id, code) => {
+    const staff = dataStaff.find(
+      (staff) => `${staff.id_Staff}` === selectedOption
+    );
+    let workTime = staff?.Registration_Time || "";
+    if (workTime !== "") workTime = `${workTime},${code}`;
+    else workTime = code;
+    let freeTime = staff?.Free_time || "";
+    let checkFreeTime = convertStrToArr(freeTime);
+    let checkDay = convertStrToArr(code);
+    let positionDate = checkFreeTime.indexOf(checkDay[0]);
+    let time = freeTime.split(",");
+    if (positionDate !== -1) {
+      if (time[positionDate] === code) {
+        time.splice(positionDate, 1);
+        freeTime = time.join(",");
+      } else {
+        if (time[positionDate][0] === "D") {
+          if (code.substring(0, 2) === "CT") {
+            code = "CS" + code.slice(2);
+          } else {
+            code = "CT" + code.slice(2);
+          }
+          time[positionDate] = code;
+          freeTime = time.join(",");
+        }
+      }
+    }
+    let response = await changeRegistrationTime(
+      staff.id_Staff,
+      freeTime,
+      workTime
+    );
+    response = await changeOrderByStaff(id, 3, staff.id_Staff);
+    dispatch(listOrder());
+    dispatch(listStaff());
+    console.log(workTime, " ", freeTime);
   };
 
   const handleChange = (event, index) => {
@@ -47,6 +85,16 @@ const OrderAdmin = () => {
     const result = arr?.map((item) => item?.split("_")[1]);
     return result;
   };
+
+  const cancelOrder = async (inforOrder) => {
+    const response = await changeStateOrderService(
+      inforOrder.id,
+      1,
+      inforOrder.days
+    );
+    dispatch(listOrder());
+  };
+
   return (
     <>
       <div className="track-container">
@@ -96,17 +144,12 @@ const OrderAdmin = () => {
                       ) {
                         let time = staff?.Free_time?.split(",");
                         if (time) {
-                          console.log(
-                            positionDate,
-                            time[positionDate][0],
-                            inforOrder?.code
-                          );
                           if (
                             time[positionDate][0] === "D" ||
                             time[positionDate] === inforOrder?.code
                           )
                             return (
-                              <option key={index} value={staff?.id}>
+                              <option key={index} value={staff?.id_Staff}>
                                 {staff.Name}
                               </option>
                             );
@@ -127,16 +170,36 @@ const OrderAdmin = () => {
                       cursor: !!selectedOption ? "pointer" : "no-drop",
                     }}
                     disabled={!!selectedOption ? false : true}
-                    onClick={() => handleConfirm(selectedOption)}
+                    onClick={() =>
+                      handleConfirm(
+                        selectedOption,
+                        inforOrder?.id,
+                        inforOrder?.code
+                      )
+                    }
                   >
                     Xác nhận
+                  </button>
+                  <button
+                    className=""
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      padding: "10px",
+                      marginLeft: "10px",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => cancelOrder(inforOrder)}
+                  >
+                    Huỷ đơn
                   </button>
                 </div>
               </div>
             );
           })
         ) : (
-          <h2>Không có người dùng phù hợp</h2>
+          <h2>Không có đơn hàng thiếu người làm</h2>
         )}
       </div>
     </>

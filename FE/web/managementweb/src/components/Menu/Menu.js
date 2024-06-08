@@ -25,7 +25,7 @@ const MenuAdmin = () => {
           <label>
             <FontAwesomeIcon icon={faChartLine} />
             &nbsp;&nbsp;
-            <Link to="/admin/revenue">Doanh thu</Link>
+            <Link to="/revenue">Doanh thu</Link>
           </label>
         </div>
       </div>
