@@ -7,6 +7,12 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (!!user) navigate("home");
+  }, []);
+
   const handleLogin = async (un, pw) => {
     try {
       const response = await loginPage(un, pw);
@@ -14,6 +20,7 @@ const Login = () => {
         throw new Error("Network response was not ok");
       } else {
         localStorage.setItem("User", JSON.stringify(response));
+        navigate("home");
       }
     } catch (error) {
       alert(

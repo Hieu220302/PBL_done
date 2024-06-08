@@ -14,6 +14,12 @@ const usersController = {
       res.send(users);
     });
   },
+  getAllSignStaff: (req, res) => {
+    Users.getAllSignStaff(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    });
+  },
   getById: (req, res) => {
     Users.getById(req.params.id, function (err, users) {
       if (err) res.send(err);
@@ -47,6 +53,13 @@ const usersController = {
   },
   checkUsername: (req, res) => {
     Users.checkUsername(function (err, users) {
+      if (err) res.send(err);
+      res.send(users);
+    }, req);
+  },
+
+  updateRoleAndAddStaff: (req, res) => {
+    Users.updateRoleAndAddStaff(function (err, users) {
       if (err) res.send(err);
       res.send(users);
     }, req);

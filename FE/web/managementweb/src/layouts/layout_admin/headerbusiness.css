@@ -1,0 +1,96 @@
+
+.headlogin {
+    padding: 1px 0;
+    text-align: center;
+}
+
+.headercontainer {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    background-color: #606eca;
+    justify-content:space-between;
+}
+
+.imgheaderlogin {
+    max-width: 200px; /* Đặt kích thước tối đa cho hình ảnh */
+    margin-top: 10px;
+    height: 100px;
+}
+
+.dn {
+    font-size: 18px;
+}
+
+.lableheaderlogin {
+    text-decoration: none;
+    color: #fff;
+    margin: 0;
+    padding-left: 60%;
+}
+
+.label-left {
+    margin-right: auto; /* Đẩy label này về bên trái */
+    font-size: 20;
+}
+.menuhearbussiness {
+    margin-left: 350px;
+}
+.h3dn {
+    margin-left: 100px;
+}
+.account-menu {
+    position: relative;
+    display: inline-block;
+    margin-right: 100px;
+}
+
+.account-menu label {
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.account-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 180px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.account-menu li {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease-in-out;
+    display: flex;
+}
+
+.account-menu li:last-child {
+    border-bottom: none;
+    /* Remove border on the last item */
+}
+
+.account-menu li:hover {
+    background-color: #f5f5f5;
+}
+
+.account-menu:hover label {
+    color: #e94560;
+    /* Change color on hover */
+}
+
+.account-menu:hover ul {
+    display: block;
+    opacity: 1;
+}

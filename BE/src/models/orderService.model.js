@@ -29,6 +29,26 @@ orderService.getAll = function (result) {
   });
 };
 
+orderService.getAllState = function (result) {
+  dbConn.query(
+    `SELECT s.Name,s.Phone_number, u.*,gs.Type
+FROM Service_order  u
+LEFT JOIN 
+Users s ON u.id_user = s.id
+LEFT JOIN 
+Information_service gs ON u.id_service = gs.id
+WHERE u.State=2;`,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
 orderService.getByIdUser = function (id, result) {
   dbConn.query(
     `Select * from Service_order WHERE id_user=${id}`,

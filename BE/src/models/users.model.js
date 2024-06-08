@@ -125,6 +125,65 @@ Users.checkUsername = function (result, props) {
   );
 };
 
+Users.getAllSignStaff = function (result) {
+  const query = `
+    SELECT u.*, s.Name AS ServiceName 
+    FROM Users u 
+    JOIN Group_service s ON u.isSignUpStaff = s.id 
+    WHERE u.isSignUpStaff > 0;
+  `;
+
+  dbConn.query(query, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
+Users.updateRoleAndAddStaff = function (result, props) {
+
+  dbConn.beginTransaction((err) => {
+    if (err) {
+      return result(err, null);
+    }
+    const updateUserQuery =
+      "UPDATE Users SET Id_role = 1,isSignUpStaff=0 WHERE id = ?";
+    dbConn.query(updateUserQuery, [props.body.userId], (err, res) => {
+      if (err) {
+        return dbConn.rollback(() => {
+          result(err, null);
+        });
+      }
+
+      const insertStaffQuery =
+        "INSERT INTO Staff (id_service, id_User) VALUES (?, ?)";
+      dbConn.query(
+        insertStaffQuery,
+        [props.body.id_service, props.body.userId],
+        (err, res) => {
+          if (err) {
+            return dbConn.rollback(() => {
+              result(err, null);
+            });
+          }
+
+          dbConn.commit((err) => {
+            if (err) {
+              return dbConn.rollback(() => {
+                result(err, null);
+              });
+            }
+            result(null, res);
+          });
+        }
+      );
+    });
+  });
+};
+
 Users.signUpUser = function (result, props) {
   const { Name, DOB, CIC, Address, Phone_number, Email, Username, Password } =
     props.body;

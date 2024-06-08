@@ -8,6 +8,12 @@ const orderServiceController = {
       res.send(orderService);
     });
   },
+  getAllState: (req, res) => {
+    orderService.getAllState(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    });
+  },
   getByIdUser: (req, res) => {
     orderService.getByIdUser(req.params.id, function (err, orderService) {
       if (err) res.send(err);

@@ -1,13 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import listCartSlice from "./reducers/Cart/listCartReducer";
-import roleReducer from "./reducers/Role/role";
-import listBillReducer from "./reducers/Bill/listBillReducer";
+import customer from "./reducers/User/customer";
+import orderService from "./reducers/OderService/orderService";
+import staff from "./reducers/Staff/staff";
+
 const rootReducer = combineReducers({
-  listCartReducer: listCartSlice,
-  roleReducer: roleReducer,
-  listBillReducer: listBillReducer,
+  listCustomer: customer,
+  listOrder: orderService,
+  listStaff: staff,
 });
 const persistConfig = {
   key: "root",

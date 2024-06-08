@@ -7,7 +7,7 @@ const loginPage = async (userName, password) => {
       userName: userName,
       password: password,
     });
-    return response.data;
+    return response.data[0];
   } catch (error) {
     console.log("error sign in" + error.message);
   }
