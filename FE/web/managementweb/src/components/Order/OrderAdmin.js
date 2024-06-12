@@ -68,7 +68,6 @@ const OrderAdmin = () => {
     response = await changeOrderByStaff(id, 3, staff.id_Staff);
     dispatch(listOrder());
     dispatch(listStaff());
-    console.log(workTime, " ", freeTime);
   };
 
   const handleChange = (event, index) => {

@@ -7,10 +7,9 @@ const bodyParser = require("body-parser");
 
 const port = process.env.PORT || 8888;
 
-// Sử dụng CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Cho phép yêu cầu từ localhost:3000
+    origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

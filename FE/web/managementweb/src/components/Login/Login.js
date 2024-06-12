@@ -16,7 +16,7 @@ const Login = () => {
   const handleLogin = async (un, pw) => {
     try {
       const response = await loginPage(un, pw);
-      if (!response) {
+      if (response?.Id_role != 0) {
         throw new Error("Network response was not ok");
       } else {
         localStorage.setItem("User", JSON.stringify(response));
