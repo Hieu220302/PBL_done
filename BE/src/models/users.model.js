@@ -144,7 +144,6 @@ Users.getAllSignStaff = function (result) {
 };
 
 Users.updateRoleAndAddStaff = function (result, props) {
-
   dbConn.beginTransaction((err) => {
     if (err) {
       return result(err, null);
@@ -191,7 +190,7 @@ Users.signUpUser = function (result, props) {
   const query = `
         INSERT INTO Users ( Name, DOB,CIC ,Address ,Phone_number ,Email ,
         Id_role ,Username ,Password,  Created_at,Updated_at )
-        VALUES (?,?,?, ?, ?, ?,2,?,?,now(),now())`;
+        VALUES (?,?,?, ?, ?, ?,2,?,?,CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'),CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'))`;
 
   const values = [
     Name,

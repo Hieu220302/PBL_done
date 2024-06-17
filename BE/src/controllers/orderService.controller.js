@@ -38,6 +38,19 @@ const orderServiceController = {
       res.send(orderService);
     }, req);
   },
+  cancelStaff: (req, res) => {
+    orderService.cancelStaff(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    }, req);
+  },
+  changeCompletedOrder: (req, res) => {
+    orderService.changeCompletedOrder(function (err, orderService) {
+      if (err) res.send(err);
+      res.send(orderService);
+    }, req);
+  },
+
   getByIdStaff: (req, res) => {
     orderService.getByIdStaff(req.params.id, function (err, orderService) {
       if (err) res.send(err);

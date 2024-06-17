@@ -70,7 +70,7 @@ orderService.getByIdStaff = function (id, result) {
   dbConn.query(
     `SELECT s.id,s.id_User,u.* 
     FROM Staff s JOIN Service_order u ON s.id = u.id_staff
-        WHERE s.id_User = ${id} AND Time >= NOW()
+        WHERE s.id_User = ${id} AND Time >= CONVERT_TZ(NOW(), @@session.time_zone, '+07:00')  AND State=3
         ORDER BY Time ASC;`,
     function (err, res) {
       if (err) {
@@ -85,9 +85,11 @@ orderService.getByIdStaff = function (id, result) {
 
 orderService.getByIdGroupService = function (result, props) {
   const { id_group_service, id_user } = props.body;
-  const sql = `SELECT * FROM Service_order WHERE State =2 AND id_group_service =? 
+  const sql = `SELECT * FROM Service_order WHERE State =2 AND 
+  id_group_service =? 
     AND id_user != ?
-    AND Time >= NOW() ORDER BY Time ASC`;
+    AND Time >= CONVERT_TZ(NOW(), @@session.time_zone, '+07:00') 
+    ORDER BY Time ASC`;
   const values = [id_group_service, id_user];
   dbConn.query(sql, values, function (err, res) {
     if (err) {
@@ -117,8 +119,8 @@ orderService.postOrder = function (result, props) {
   } = props.body;
   const sql = `
         INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, 
-        id_service, State, Notes, Total,isServicePacks,code,days,id_group_service)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)
+        id_service, State, Notes, Total,isServicePacks,code,days,id_group_service,Created_at,Updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'),CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'))
     `;
   const values = [
     id_user,
@@ -148,8 +150,38 @@ orderService.postOrder = function (result, props) {
 
 orderService.changeStateOrder = function (result, props) {
   const { id, State, days } = props.body;
-  const sql = `UPDATE Service_order SET State = ?,days= ? WHERE id = ?`;
+  const sql = `UPDATE Service_order SET State = ?,days= ?,Updated_at=CONVERT_TZ(NOW(), @@session.time_zone, '+07:00') WHERE id = ?`;
   const values = [State, days, id];
+
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
+orderService.cancelStaff = function (result, props) {
+  const { id } = props.body;
+  const sql = `UPDATE Service_order SET staffCancel = 1 WHERE id = ?`;
+  const values = [id];
+
+  dbConn.query(sql, values, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
+orderService.changeCompletedOrder = function (result, props) {
+  const { id, dateChange, codeWork, completedDate } = props.body;
+  const sql = `UPDATE Service_order SET Time = ?,code= ?,completedDate= ?,Updated_at=CONVERT_TZ(NOW(), @@session.time_zone, '+07:00') WHERE id = ?`;
+  const values = [dateChange, codeWork, completedDate, id];
 
   dbConn.query(sql, values, function (err, res) {
     if (err) {
@@ -163,7 +195,7 @@ orderService.changeStateOrder = function (result, props) {
 
 orderService.changeOrderByStaff = function (result, props) {
   const { id, State, id_staff } = props.body;
-  const sql = `UPDATE Service_order SET State = ?,id_staff=? WHERE id = ?`;
+  const sql = `UPDATE Service_order SET State = ?,id_staff=?,Updated_at=CONVERT_TZ(NOW(), @@session.time_zone, '+07:00') WHERE id = ?`;
   const values = [State, id_staff, id];
 
   dbConn.query(sql, values, function (err, res) {

@@ -25,7 +25,7 @@ Staff.getAll = function (result) {
 
 Staff.getAllByCustomer = function (result) {
   dbConn.query(
-    "SELECT s.id_User,s.id, u.Name,u.Phone_number  FROM Users u JOIN Staff s ON s.id_User = u.id",
+    "   SELECT s.* , u.Name,u.Phone_number  FROM Users u JOIN Staff s ON s.id_User = u.id",
     function (err, res) {
       if (err) {
         console.log("error: ", err);
