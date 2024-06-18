@@ -69,8 +69,17 @@ Users.checkAuth = function (userName, password, result) {
 };
 
 Users.updateUser = function (result, props) {
-  const { id, Name, DOB, CIC, Address, Phone_number, Email, Updated_at } =
-    props.body;
+  const {
+    id,
+    Name,
+    DOB,
+    CIC,
+    Address,
+    Phone_number,
+    Email,
+    Image,
+    Updated_at,
+  } = props.body;
 
   const query = `
     UPDATE Users 
@@ -81,10 +90,21 @@ Users.updateUser = function (result, props) {
       Address = ?, 
       Phone_number = ?, 
       Email = ?, 
+      Image= ?,
       Updated_at = ?
     WHERE id = ?`;
 
-  const values = [Name, DOB, CIC, Address, Phone_number, Email, Updated_at, id];
+  const values = [
+    Name,
+    DOB,
+    CIC,
+    Address,
+    Phone_number,
+    Email,
+    Image,
+    Updated_at,
+    id,
+  ];
 
   dbConn.query(query, values, function (err, res) {
     if (err) {
