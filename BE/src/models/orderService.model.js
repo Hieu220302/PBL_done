@@ -116,11 +116,12 @@ orderService.postOrder = function (result, props) {
     code,
     days,
     id_group_service,
+    paymentMethods,
   } = props.body;
   const sql = `
         INSERT INTO Service_order (id_user, Address, Time, Duration, Quantity, 
-        id_service, State, Notes, Total,isServicePacks,code,days,id_group_service,Created_at,Updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'),CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'))
+        id_service, State, Notes, Total,isServicePacks,code,days,id_group_service,paymentMethods,Created_at,Updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'),CONVERT_TZ(NOW(), @@session.time_zone, '+07:00'))
     `;
   const values = [
     id_user,
@@ -136,6 +137,7 @@ orderService.postOrder = function (result, props) {
     code,
     days,
     id_group_service,
+    paymentMethods,
   ];
 
   dbConn.query(sql, values, function (err, res) {
