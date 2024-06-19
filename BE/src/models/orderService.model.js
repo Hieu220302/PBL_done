@@ -40,7 +40,8 @@ LEFT JOIN
 Users s ON u.id_user = s.id
 LEFT JOIN 
 Information_service gs ON u.id_service = gs.id
-WHERE u.State=2;`,
+  ORDER BY Time ASC;
+`,
     function (err, res) {
       if (err) {
         console.log("error: ", err);

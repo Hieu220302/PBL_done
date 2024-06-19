@@ -35,8 +35,8 @@ const UserAdmin = () => {
           <div>Công việc muốn làm</div>
         </div>
 
-        {dataCustomer.length > 0 ? (
-          dataCustomer.map((user, index) => (
+        {dataCustomer?.length > 0 ? (
+          dataCustomer?.map((user, index) => (
             <div
               className="tracking-info"
               key={index}
