@@ -147,7 +147,7 @@ const OrderAdmin = () => {
     <>
       <div className="track-container">
         <h2>Quản lý đơn hàng</h2>
-        <div style={{ margin: 20 }}>
+        <div style={{ margin: 10 }}>
           <Tabs value={selectedState} onChange={handleTabChange} centered>
             {state.map((state, index) => (
               <Tab
@@ -238,7 +238,7 @@ const OrderAdmin = () => {
                     )}
                   </>
                 )}
-                <div>
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
                   {selectedState === 2 && (
                     <button
                       className=""

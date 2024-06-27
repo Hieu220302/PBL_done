@@ -12,7 +12,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Đăng ký các thành phần cần thiết của Chart.js
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const RevenueAdmin = () => {
@@ -23,22 +22,22 @@ const RevenueAdmin = () => {
 
   useEffect(() => {
     dispatch(listAllOrder());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      "Tháng 1",
+      "Tháng 2",
+      "Tháng 3",
+      "Tháng 4",
+      "Tháng 5",
+      "Tháng 6",
+      "Tháng 7",
+      "Tháng 8",
+      "Tháng 9",
+      "Tháng 10",
+      "Tháng 11",
+      "Tháng 12",
     ];
 
     const revenueByMonth = months.reduce((acc, month) => {
@@ -83,7 +82,7 @@ const RevenueAdmin = () => {
   const years = Array.from(
     new Set(dataAllOrder.map((order) => new Date(order.Time).getFullYear()))
   );
-
+  
   return (
     <div>
       <h2>Biểu đồ doanh thu theo tháng</h2>
